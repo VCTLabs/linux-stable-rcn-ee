@@ -18,6 +18,7 @@
 #include <linux/interrupt.h>
 #include <linux/io.h>
 #include <linux/pm_runtime.h>
+//#include <linux/gpio.h>
 
 #include "core.h"
 #include "host-export.h"
@@ -87,6 +88,13 @@ static int cdns_core_init_role(struct cdns *cdns)
 	int ret;
 
 	dr_mode = usb_get_dr_mode(dev);
+#ifdef CONFIG_SOC_STARFIVE_VIC7100
+	dr_mode = USB_DR_MODE_HOST;
+/*
+	if(gpio_get_value(22))
+		dr_mode = USB_DR_MODE_PERIPHERAL;
+*/
+#endif
 	cdns->role = USB_ROLE_NONE;
 
 	/*
